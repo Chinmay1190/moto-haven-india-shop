@@ -33,11 +33,35 @@ const PaymentMethods = [
   }
 ];
 
+// Define types for form data and errors
+type FormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  paymentMethod: string;
+};
+
+type FormErrors = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+};
+
 const Checkout = () => {
   const { cartItems, getTotalPrice, clearCart } = useCart();
   const navigate = useNavigate();
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
     email: "",
@@ -49,7 +73,7 @@ const Checkout = () => {
     paymentMethod: "credit-card"
   });
   
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isProcessing, setIsProcessing] = useState(false);
   
   const subtotal = getTotalPrice();
@@ -66,7 +90,7 @@ const Checkout = () => {
   };
   
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: FormErrors = {};
     
     // Basic validation
     if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
